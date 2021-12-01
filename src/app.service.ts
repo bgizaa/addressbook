@@ -16,7 +16,7 @@ export class AppService {
     contact.phoneNumber = contactRepository.phoneNumber;
     contact.firstName = contactRepository.firstName;
     contact.lastName = contactRepository.lastName;
-    contact.emailAddress = contactRepository.lastName;
+    contact.emailAddress = contactRepository.emailAddress;
 
     return this.contactRepository.save(contact);
   }
