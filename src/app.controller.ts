@@ -1,12 +1,29 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { AppService } from './app.service';
+import { ContactDto } from './dto/contact.dto';
+import { Contact } from './entity/contact.entity';
 
-@Controller()
+@Controller('contacts')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getContactList() : Promise<Contact[]>{
+    return this.appService.getContactList();
+  }
+
+  @Get(':phoneNumber')
+  search(@Param('phoneNumber') phoneNumber: string) : Promise<Contact>  {
+    return this.appService.searchContact(phoneNumber);
+  }
+
+  @Post()
+  createContact(@Body() createContact: ContactDto): Promise<Contact> {
+    return this.appService.createContact(createContact);
+  }
+
+  @Delete()
+  deleteContact(contactNumber: string) {
+    return this.appService.deleteContact(contactNumber);
   }
 }
