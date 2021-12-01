@@ -30,6 +30,12 @@ export class AppService {
   }
 
 
+  async updateContact(phoneNumber: string, updateDto: ContactDto){
+    return this.contactRepository.update(phoneNumber,updateDto);
+  }
+
+
+
   async deleteContact(phoneNumber: string): Promise<void> {
     await this.contactRepository.delete(phoneNumber);
   }

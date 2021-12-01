@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ContactDto } from './dto/contact.dto';
 import { Contact } from './entity/contact.entity';
@@ -20,6 +20,11 @@ export class AppController {
   @Post()
   createContact(@Body() createContact: ContactDto): Promise<Contact> {
     return this.appService.createContact(createContact);
+  }
+
+  @Patch(':phoneNumber')
+  update(@Param('phoneNumber') phoneNumber: string, @Body() updateContact: ContactDto) {
+    return this.appService.updateContact(phoneNumber, updateContact);
   }
 
   @Delete(':phoneNumber')
