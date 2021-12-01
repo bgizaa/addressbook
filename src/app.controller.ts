@@ -22,8 +22,8 @@ export class AppController {
     return this.appService.createContact(createContact);
   }
 
-  @Delete()
-  deleteContact(contactNumber: string) {
-    return this.appService.deleteContact(contactNumber);
+  @Delete(':phoneNumber')
+  deleteContact(@Param('phoneNumber') phoneNumber: string) {
+    return this.appService.deleteContact(phoneNumber);
   }
 }
