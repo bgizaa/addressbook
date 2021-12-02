@@ -25,18 +25,18 @@ export class AppService {
     return this.contactRepository.find();
   }
 
-  async searchContact(phoneNumber: string): Promise<Contact> {
-    return this.contactRepository.findOne(phoneNumber);
+  async searchContact(firstName: string): Promise<Contact> {
+    return this.contactRepository.findOne(firstName);
   }
 
 
-  async updateContact(phoneNumber: string, updateDto: ContactDto){
-    return this.contactRepository.update(phoneNumber,updateDto);
+  async updateContact(firstName: string, updateDto: ContactDto){
+    return this.contactRepository.update(firstName,updateDto);
   }
 
 
 
-  async deleteContact(phoneNumber: string): Promise<void> {
-    await this.contactRepository.delete(phoneNumber);
+  async deleteContact(firstName: string): Promise<void> {
+    await this.contactRepository.delete(firstName);
   }
 }

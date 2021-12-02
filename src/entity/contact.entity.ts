@@ -1,12 +1,12 @@
-import { Column, Entity, PrimaryColumn} from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Contact {
   @PrimaryColumn()
-  phoneNumber: string;
+  firstName: string;
 
   @Column()
-  firstName: string;
+  phoneNumber: string;
 
   @Column()
   lastName: string;
