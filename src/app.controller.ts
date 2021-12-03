@@ -38,4 +38,9 @@ export class AppController {
   deleteContact(@Param('firstName') firstName: string) {
     return this.appService.deleteContact(firstName);
   }
+
+  @Delete()
+  deleteAllContact(){
+    return this.appService.deleteAllContact();
+  }
 }

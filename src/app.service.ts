@@ -39,4 +39,8 @@ export class AppService {
   async deleteContact(firstName: string): Promise<void> {
     await this.contactRepository.delete(firstName);
   }
+
+  async deleteAllContact(): Promise<void> {
+    await  this.contactRepository.query('DELETE FROM contact')
+  }
 }
