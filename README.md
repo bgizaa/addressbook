@@ -22,7 +22,8 @@ _run project_ <br>
 
 API's
    - GET /contacts - List all contacts
-   - GET /contacts/:phoneNumber - Search contact by First Name
+   - GET /contacts/:phoneNumber - Search contact by Phone Number
+   - GET /contacts/:firstName - Search contact by First Name
    - PUT /contacts  - Create new contact
    
          
