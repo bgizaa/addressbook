@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { ContactDto } from './dto/contact.dto';
@@ -11,14 +19,13 @@ export class AppController {
 
   @ApiOperation({ summary: 'Get List of Contacts' })
   @Get()
-  getContactList() : Promise<Contact[]>{
+  getContactList(): Promise<Contact[]> {
     return this.appService.getContactList();
   }
 
-  @ApiOperation({ summary: 'Search contact by First Name' })
-  @Get(':firstName')
-  search(@Param('firstName') firstName: string) : Promise<Contact>  {
-    return this.appService.searchContact(firstName);
+  @Get(':identifier')
+  searchContact(@Param('identifier') identifier: string) {
+    return this.appService.searchContact(identifier);
   }
 
   @ApiOperation({ summary: 'Create New Contact' })
@@ -29,7 +36,10 @@ export class AppController {
 
   @ApiOperation({ summary: 'Update existing Contact using first name' })
   @Patch(':firstName')
-  update(@Param('firstName') firstName: string, @Body() updateContact: ContactDto) {
+  update(
+    @Param('firstName') firstName: string,
+    @Body() updateContact: ContactDto,
+  ) {
     return this.appService.updateContact(firstName, updateContact);
   }
 
@@ -40,7 +50,7 @@ export class AppController {
   }
 
   @Delete()
-  deleteAllContact(){
+  deleteAllContact() {
     return this.appService.deleteAllContact();
   }
 }

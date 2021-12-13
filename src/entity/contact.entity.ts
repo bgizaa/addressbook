@@ -3,10 +3,10 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 @Entity()
 export class Contact {
   @PrimaryColumn()
-  firstName: string;
+  phoneNumber: string;
 
   @Column()
-  phoneNumber: string;
+  firstName: string;
 
   @Column()
   lastName: string;

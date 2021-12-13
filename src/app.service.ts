@@ -1,4 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  HttpCode,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ContactDto } from './dto/contact.dto';
 import { Repository } from 'typeorm';
 import { Contact } from './entity/contact.entity';
@@ -18,19 +24,31 @@ export class AppService {
     contact.lastName = contactRepository.lastName;
     contact.emailAddress = contactRepository.emailAddress;
 
-    return this.contactRepository.save(contact);
+    const contactInDb = await this.contactRepository.findOne(
+      contact.phoneNumber,
+    );
+
+    if (contactInDb) throw new ConflictException('Contact already exists');
+
+    return await this.contactRepository.save(contact);
   }
 
   async getContactList(): Promise<Contact[]> {
     return this.contactRepository.find();
   }
 
-  async searchContact(firstName: string): Promise<Contact> {
-    return this.contactRepository.findOne(firstName);
+  async searchContact(identifier: string): Promise<any> {
+    if (identifier.match(/^[0-9]*$/))
+      return this.contactRepository.findOne(identifier);
+
+    return await this.contactRepository
+      .createQueryBuilder('contact')
+      .where('contact.firstName =:firstName', { firstName: identifier })
+      .getMany();
   }
 
-  async updateContact(firstName: string, updateDto: ContactDto){
-    await this.contactRepository.update(firstName,updateDto);
+  async updateContact(firstName: string, updateDto: ContactDto) {
+    await this.contactRepository.update(firstName, updateDto);
   }
 
   async deleteContact(firstName: string): Promise<void> {
