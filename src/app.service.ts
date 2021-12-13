@@ -29,18 +29,19 @@ export class AppService {
     return this.contactRepository.findOne(firstName);
   }
 
-
   async updateContact(firstName: string, updateDto: ContactDto){
-    return this.contactRepository.update(firstName,updateDto);
+    await this.contactRepository.update(firstName,updateDto);
   }
-
-
 
   async deleteContact(firstName: string): Promise<void> {
     await this.contactRepository.delete(firstName);
   }
 
   async deleteAllContact(): Promise<void> {
-    await  this.contactRepository.query('DELETE FROM contact')
+    await this.contactRepository
+      .createQueryBuilder()
+      .delete()
+      .from('contact')
+      .execute();
   }
 }
