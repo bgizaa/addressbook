@@ -24,7 +24,7 @@ API's
    - GET /contacts - List all contacts
    - GET /contacts/:phoneNumber - Search contact by Phone Number
    - GET /contacts/:firstName - Search contact by First Name
-   - PUT /contacts  - Create new contact
+   - POST /contacts  - Create new contact
    
          
 	"phoneNumber": "250782292968",

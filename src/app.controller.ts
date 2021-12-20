@@ -8,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { AppService } from './app.service';
+import { AppService } from './modules/contact/contact.service';
 import { ContactDto } from './dto/contact.dto';
 import { Contact } from './entity/contact.entity';
 
@@ -23,6 +23,8 @@ export class AppController {
     return this.appService.getContactList();
   }
 
+
+  @ApiOperation({ summary: 'Search Contact using First Name or Phone Number' })
   @Get(':identifier')
   searchContact(@Param('identifier') identifier: string) {
     return this.appService.searchContact(identifier);

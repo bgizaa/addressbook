@@ -5,10 +5,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { ContactDto } from './dto/contact.dto';
 import { Repository } from 'typeorm';
-import { Contact } from './entity/contact.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { _404 } from 'src/common/error.constants';
+import { Contact } from 'src/entity/contact.entity';
+import { ContactDto } from 'src/dto/contact.dto';
 
 @Injectable()
 export class AppService {
@@ -38,13 +39,19 @@ export class AppService {
   }
 
   async searchContact(identifier: string): Promise<any> {
-    if (identifier.match(/^[0-9]*$/))
-      return this.contactRepository.findOne(identifier);
+    let contact;
 
-    return await this.contactRepository
-      .createQueryBuilder('contact')
-      .where('contact.firstName =:firstName', { firstName: identifier })
-      .getMany();
+    if (identifier.match(/^[0-9]*$/)) {
+      contact = await this.contactRepository.findOne(identifier);
+    } else
+      contact = await this.contactRepository
+        .createQueryBuilder('contact')
+        .where('contact.firstName =:firstName', { firstName: identifier })
+        .getMany();
+
+    if (contact.length === 0 || undefined)
+      throw new NotFoundException(_404.CONTACT_NOT_FOUND);
+    return contact;
   }
 
   async updateContact(firstName: string, updateDto: ContactDto) {
