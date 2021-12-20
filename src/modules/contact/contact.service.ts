@@ -41,9 +41,15 @@ export class AppService {
   async searchContact(identifier: string): Promise<any> {
     let contact;
 
+    /**
+     * return a single occurence when identifier is a phone Number
+     */
     if (identifier.match(/^[0-9]*$/)) {
       contact = await this.contactRepository.findOne(identifier);
     } else
+    /**
+     * return all occurences when identifier is the first Name
+     */
       contact = await this.contactRepository
         .createQueryBuilder('contact')
         .where('contact.firstName =:firstName', { firstName: identifier })
